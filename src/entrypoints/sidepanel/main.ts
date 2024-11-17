@@ -1,18 +1,20 @@
 import { CodeJar } from 'codejar';
 import './style.css';
-import { createHighlighter } from 'shiki'
+import { BundledLanguage, BundledTheme, createHighlighter, HighlighterGeneric } from 'shiki'
 import { RequestType } from '@/utils/types';
 import { Tabs } from 'wxt/browser';
-
-const highlighter = await createHighlighter({
-  themes: [
-    'github-dark-default',
-    'github-light-default',
-  ],
-  langs: [
-    'regexp'
-  ],
-});
+let highlighter: HighlighterGeneric<BundledLanguage, BundledTheme>;
+; (async () => {
+  highlighter = await createHighlighter({
+    themes: [
+      'github-dark-default',
+      'github-light-default',
+    ],
+    langs: [
+      'regexp'
+    ],
+  });
+})();
 
 function isDark(): Boolean {
   return window?.matchMedia?.('(prefers-color-scheme:dark)')?.matches ?? false;
