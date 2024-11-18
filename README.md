@@ -1,6 +1,6 @@
 ![TabRegex](images/banners/promo_tile_marquee.png)
 
-<h1 style="text-align: center">Tabregex</h1>
+<h1 style="text-align: center">TabRegex</h1>
 <p style="text-align: center">A Browser Extension to bulk manipulate Tabs using RegExp.</p>
 
 
