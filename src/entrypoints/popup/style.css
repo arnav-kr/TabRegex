@@ -294,10 +294,19 @@ kbd {
   color: #e94034;
 }
 
+.globe_black {
+  display: none;
+}
 @media (prefers-color-scheme: light) {
   :root {
     color: #0d1117;
     background-color: #fbfbfb;
+  }
+  .globe {
+    display: none;
+  }
+  .globe_black {
+    display: initial;
   }
   .invalid {
     color: #dc2626;

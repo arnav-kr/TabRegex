@@ -95,7 +95,11 @@ function Card(tab: Tabs.Tab): string {
   return `<label for="tab-${tab.id}" class="tab-item">
           <input type="checkbox" name="tab-${tab.id}" id="tab-${tab.id}" class="tab-boxes" data-id=${tab.id} checked>
           <div class="tab-card">
-            <img src="${tab.favIconUrl === "" || !tab.favIconUrl ? "globe.svg" : tab.favIconUrl}" alt="favicon" />
+    ${tab.favIconUrl === "" || !tab.favIconUrl ?
+      `<img src="globe_black.svg" class="globe_black" alt="favicon" />
+       <img src="globe.svg" class="globe" alt="favicon" />` :
+      `<img src="${tab.favIconUrl}" alt="favicon" />`
+    }
             <div>
               <div class="title" title="${tab.title}">${tab.title}</div>
               <div class="url" title="${tab.url}">${tab.url}</div>
