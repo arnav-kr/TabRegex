@@ -1,9 +1,9 @@
 import { BackgroundRequest, RequestType } from "@/utils/types";
 
 export default defineBackground(() => {
-  chrome.sidePanel
-    .setPanelBehavior({ openPanelOnActionClick: true })
-    .catch((error) => console.error(error));
+  // chrome.sidePanel
+  //   .setPanelBehavior({ openPanelOnActionClick: true })
+  //   .catch((error) => console.error(error));
 
   browser.runtime.onMessage.addListener(async (request, _, sendResponse) => {
     if ((request as BackgroundRequest).type === RequestType.QUERY_TABS) {

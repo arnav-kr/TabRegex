@@ -14,6 +14,9 @@ let highlighter: HighlighterGeneric<BundledLanguage, BundledTheme>;
       'regexp'
     ],
   });
+
+  // initial highlight, as codejar doesn't call highlight initially
+  highlight(document.querySelector('#editor') as HTMLElement);
 })();
 
 function isDark(): Boolean {
@@ -29,11 +32,12 @@ function highlight(editor: HTMLElement) {
     theme: isDark() ? "github-dark-default" : "github-light-default",
     lang: "regexp",
   });
-  editor.innerHTML = code;
+  editor.innerHTML = new DOMParser().parseFromString(code, "text/html").querySelector(".shiki")?.innerHTML || "";
 }
 
 let jar = CodeJar(document.querySelector('#editor') as HTMLElement, highlight);
 document.querySelector("#editor")?.addEventListener("keydown", async e => {
+  console.log(e)
   if ((e as KeyboardEvent).key == "Enter") {
     e.preventDefault();
     e.stopPropagation();
@@ -44,12 +48,33 @@ document.querySelector("#editor")?.addEventListener("keydown", async e => {
     console.log(tabs);
     populateUpdates(tabs, jar.toString());
   }
+}, true);
+
+document.querySelectorAll(".match").forEach((el) => {
+  el.addEventListener("change", async () => {
+    let tabs: Tabs.Tab[] = await browser.runtime.sendMessage({
+      type: RequestType.QUERY_TABS,
+    });
+    console.log(tabs);
+    populateUpdates(tabs, jar.toString());
+  });
 });
 
 function populateUpdates(tabs: Tabs.Tab[], regex: string) {
   let matchTitle = (document.getElementById("match_title") as HTMLInputElement).checked == true;
   let matchURL = (document.getElementById("match_url") as HTMLInputElement).checked == true;
-  let regexp: RegExp = new RegExp(regex);
+
+  let regexp: RegExp;
+  try {
+    regexp = new RegExp(regex);
+  }
+  catch (e) {
+    const tabsContainer = document.querySelector(".tabs");
+    if (tabsContainer) {
+      tabsContainer.innerHTML = `<div class="no-tabs-found invalid">Invalid Regular Expression</div>`;
+    }
+    return;
+  }
   let filtered: Tabs.Tab[] = filterTabs(tabs, {
     regex: regexp,
     matchTitle,
@@ -104,6 +129,7 @@ async function removeTabs(e: Event) {
   e.preventDefault();
   let tabsToRemove = Array.from(document.querySelectorAll(".tab-boxes:checked"));
   let ids: number[] = tabsToRemove.map(tab => Number((tab as HTMLElement).dataset.id));
+  if (ids.length === 0) return;
   let res = await browser.runtime.sendMessage({
     type: RequestType.CLOSE_TABS,
     tabs: ids
@@ -117,6 +143,3 @@ async function removeTabs(e: Event) {
 }
 
 document.querySelector(".execute")?.addEventListener("click", removeTabs);
-
-// initial highlight, as codejar doesn't call highlight initially
-highlight(document.querySelector('#editor') as HTMLElement);
