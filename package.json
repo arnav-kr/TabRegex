@@ -1,6 +1,6 @@
 {
   "name": "tabregex",
-  "description": "An Extension to perform tab related operations using regex in browser.",
+  "description": "A Browser Extension to bulk manipulate Tabs using RegExp.",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -20,8 +20,21 @@
     "wxt": "^0.19.13"
   },
   "dependencies": {
-    "@webext-core/messaging": "^2.1.0",
     "codejar": "^4.2.0",
     "shiki": "^1.23.0"
-  }
+  },
+  "readme": "https://github.com/arnav-kr/TabRegex/blob/main/README.md",
+  "author": {
+    "name": "Arnav Kumar",
+    "url": "https://github.com/arnav-kr"
+  },
+  "license": "AGPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arnav-kr/TabRegex"
+  },
+  "bugs": {
+    "url": "https://github.com/arnav-kr/TabRegex/issues"
+  },
+  "homepage": "https://github.com/arnav-kr/TabRegex"
 }

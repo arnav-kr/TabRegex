@@ -37,7 +37,6 @@ function highlight(editor: HTMLElement) {
 
 let jar = CodeJar(document.querySelector('#editor') as HTMLElement, highlight);
 document.querySelector("#editor")?.addEventListener("keydown", async e => {
-  console.log(e)
   if ((e as KeyboardEvent).key == "Enter") {
     e.preventDefault();
     e.stopPropagation();
@@ -45,7 +44,6 @@ document.querySelector("#editor")?.addEventListener("keydown", async e => {
     let tabs: Tabs.Tab[] = await browser.runtime.sendMessage({
       type: RequestType.QUERY_TABS,
     });
-    console.log(tabs);
     populateUpdates(tabs, jar.toString());
   }
 }, true);
@@ -55,7 +53,6 @@ document.querySelectorAll(".match").forEach((el) => {
     let tabs: Tabs.Tab[] = await browser.runtime.sendMessage({
       type: RequestType.QUERY_TABS,
     });
-    console.log(tabs);
     populateUpdates(tabs, jar.toString());
   });
 });
@@ -138,11 +135,9 @@ async function removeTabs(e: Event) {
     type: RequestType.CLOSE_TABS,
     tabs: ids
   });
-  console.log(res);
   let tabs: Tabs.Tab[] = await browser.runtime.sendMessage({
     type: RequestType.QUERY_TABS,
   });
-  console.log(tabs);
   populateUpdates(tabs, jar.toString());
 }
 
