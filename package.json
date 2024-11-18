@@ -1,8 +1,8 @@
 {
   "name": "tabregex",
-  "description": "A Browser Extension to bulk manipulate Tabs using RegExp.",
+  "description": "A Browser Extension for bulk manipulation of Tabs using RegExp.",
   "private": true,
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "scripts": {
     "dev": "wxt",
