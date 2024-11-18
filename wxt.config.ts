@@ -5,6 +5,9 @@ export default defineConfig({
   srcDir: "src",
   outDir: "dist",
   manifest: {
-    permissions: ["tabs"]
+    permissions: ["tabs"],
+    "content_security_policy": {
+      "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self' 'wasm-unsafe-eval'; worker-src 'self' 'wasm-unsafe-eval';"
+    },
   }
 });
